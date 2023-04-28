@@ -1,0 +1,45 @@
+version: '3.0'
+services:
+  dev:
+    container_name: dev
+    build: 
+      context: .
+      args:
+        - APT_CUSTOM_PKG=${APT_CUSTOM_PKG}
+    networks:
+      - dev-container
+    environment:
+      - DISPLAY=$DISPLAY
+      - WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
+      - PULSE_SERVER=$PULSE_SERVER
+      - LIBVA_DRIVER_NAME=d3d12
+      - LD_LIBRARY_PATH=/usr/lib/wsl/lib
+      - MESA_D3D12_DEFAULT_ADAPTER_NAME=$MESA_D3D12_DEFAULT_ADAPTER_NAME
+    devices:
+      - "/dev/dxg:/dev/dxg"
+      - "/dev/dri/card0:/dev/dri/card0"
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg 
+      - /usr/lib/wsl:/usr/lib/wsl
+      - ${PWD}/local/home:/home
+      - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}
+      - ${PWD}/local/tmp:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    security_opt:
+      - seccomp:seccomp.json
+
+networks:
+  dev-container:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.254.0/24"
+    

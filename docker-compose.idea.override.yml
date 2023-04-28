@@ -1,0 +1,6 @@
+version: '3.0'
+services:
+  dev:
+    volumes:
+#      - ${PWD}/local/idea-IC-231.8109.175:/opt/idea
+      - ${PWD}/local/VSCode-linux-x64:/opt/VSCode
