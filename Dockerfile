@@ -1,4 +1,4 @@
-FROM ubuntu:22.10 as runtime
+FROM ubuntu:24.10 as runtime
 
 ARG S6_OVERLAY_VERSION=3.1.4.1
 ARG DEBIAN_FRONTEND=noninteractive
@@ -8,7 +8,7 @@ ARG APT_CUSTOM_PKG
 # RUN apt-get update && apt install -y software-properties-common
 # RUN add-apt-repository ppa:oibaf/graphics-drivers -y
 
-RUN apt update && apt --no-install-recommends --yes install software-properties-common gpg-agent \
+RUN userdel -r ubuntu && apt update && apt --no-install-recommends --yes install software-properties-common gpg-agent \
 && rm -rf /var/lib/apt/lists/*
 RUN printf 'Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n' | tee /etc/apt/preferences.d/mozilla-firefox \
 && printf 'Package: firefox\nPin: version 1:1snap1-0ubuntu2\nPin-Priority: -1' | tee -a /etc/apt/preferences.d/mozilla-firefox \

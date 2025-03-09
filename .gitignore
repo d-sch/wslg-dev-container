@@ -1,1 +1,8 @@
-local/
+devcontainer/
+ide/
+docker-compose.override.yml
+**/users.list
+start.sh
+idea*.tar.gz
+code*.tar.gz
+Makefile
