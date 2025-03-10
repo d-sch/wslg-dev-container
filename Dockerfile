@@ -9,9 +9,10 @@ ARG APT_CUSTOM_PKG
 # RUN add-apt-repository ppa:oibaf/graphics-drivers -y
 
 RUN userdel -r ubuntu && apt update && apt --no-install-recommends --yes install software-properties-common gpg-agent \
-&& rm -rf /var/lib/apt/lists/*
-RUN printf 'Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n' | tee /etc/apt/preferences.d/mozilla-firefox \
-&& printf 'Package: firefox\nPin: version 1:1snap1-0ubuntu2\nPin-Priority: -1' | tee -a /etc/apt/preferences.d/mozilla-firefox \
+&& rm -rf /var/lib/apt/lists/* \
+&& printf 'Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 100\n' | tee /etc/apt/preferences.d/mozillateam \
+&& printf 'Package: firefox*\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n' | tee -a /etc/apt/preferences.d/mozillateam \
+&& printf 'Package: firefox*\nPin: release o=Ubuntu\nPin-Priority: -1\n' | tee -a /etc/apt/preferences.d/mozillateam \
 && printf 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox \
 && add-apt-repository --yes ppa:mozillateam/ppa \
 && apt update && apt install --no-install-recommends --yes \

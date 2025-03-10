@@ -2,12 +2,7 @@
 
 #if not exists, create devcontainer/home directory
 if [ ! -d "devcontainer/home" ]; then
-    mkdir -p devcontainer/home
-fi
-
-#if not exists, create devcontainer/tmp directory
-if [ ! -d "devcontainer/tmp" ]; then
-    mkdir -p devcontainer/tmp
+    mkdir -p devcontainer/home/$USER
 fi
 
 cp context/etc/users.list.template context/etc/users.list

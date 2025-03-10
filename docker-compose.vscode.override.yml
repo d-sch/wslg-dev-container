@@ -1,6 +1,5 @@
 services:
   dev:
     volumes:
-      - ${PWD}/devcontainer/home:${PWD}/devcontainer/home
-      - ${PWD}/devcontainer/tmp:/tmp
+
       - ${PWD}/ide:/opt/code

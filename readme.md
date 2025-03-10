@@ -38,9 +38,9 @@
 <h3 align="center">WSLg-dev-container</h3>
 
   <p align="center">
-    Execute your favorite IDE inside a container and start developing.</br>
-    Don't requires installation on Windows. Just needs WSL2-WSLg and a Docker installation</br>
-    Simply rebuild from Dockerfile for upgrade.
+    Execute your favorite IDE (Cursor, Visual Studio Code, IntelliJ CE) inside a container and start developing.</br>
+    Only needs WSL2-WSLg and a Docker installation. No further Windows dependencies.</br>
+    Simply reinstall for upgrade.
     <br />
     <a href="https://github.com/d-sch/wslg-dev-container"><strong>Explore the docs »</strong></a>
     <br />
@@ -85,10 +85,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+Portable development environment. Easy.
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `d-sch`, `wslg-dev-container`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`
+<!-- Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `d-sch`, `wslg-dev-container`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,6 +144,10 @@ To get a local copy up and running follow these simple example steps.
   ```
   or
   ```sh
+  ./install-cursor.sh
+  ```
+  or
+  ```sh
   ./install-intellij.sh
   ```
 
@@ -159,8 +163,77 @@ After your favorite IDE is installed you can start it with
 
 Your IDE will welcome you after the container initialization is done.
 
+### Enable Gpu Support
+
+#### Prerequisites
+- Make sure path of `XDG_RUNTIME_DIR`, `XDG_RUNTIME_DIR/dconf` and file `XDG_RUNTIME_DIR/dconf/user` is owned by your user. 
+  - Create file according to https://github.com/microsoft/wslg/issues/1032#issuecomment-2458021984
+    ```
+    $ nano ~/.config/user-tmpfiles.d/wslg.conf
+    ```
+    Content
+    ```
+    #Type Path                                     Mode User Group Age         Argument
+    L+    %t/wayland-0                             -    -    -     -           /mnt/wslg/runtime-dir/wayland-0
+    L+    %t/wayland-0.lock                        -    -    -     -           /mnt/wslg/runtime-dir/wayland-0.lock
+    L+    %t/pulse                                 -    -    -     -           /mnt/wslg/runtime-dir/pulse
+    ```
+  - ensure `systemd-tmpfiles-setup.service` is enabled
+    ```sh
+    sudo systemctl --global enable systemd-tmpfiles-setup.service
+    ```
+  - restart WSL in PowerShell or Command Prompt
+    ```
+    wsl --shutdown
+    ```
+
+#### NVidia 
+
+- Make sure devcontainer is down
+- First install the `cuda-toolkit`
+```sh
+$ wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin 
+$ sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+$ wget https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
+$ sudo dpkg -i cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
+$ sudo cp /var/cuda-repo-wsl-ubuntu-12-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
+$ sudo apt-get update
+$ sudo apt-get -y install cuda-toolkit-12-8
+```
+- Now install the `nvidia-container-toolkit`
+```sh
+$ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | 
+sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+$ sudo sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list
+$ sudo apt-get update
+```
+- Un-commment gpu resources and save `docker-composer.yml`
+```
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+```
+- Start devcontainer
+```sh
+$ ./start.sh
+```
+
+##### Current Installation Instructions
+- `cuda-toolkit`\
+https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
+- `nvidia-container-toolkit`\
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-the-nvidia-container-toolkit
+
 ## Visual Studio Code
 ![a](images/vscode_wsl2_container.png)
+
+## Cursor
+![a](images/cursor_wsl2_container.png)
 
 ## IntelliJ
 ![a](images/intellij_wsl2_container.png)
@@ -172,7 +245,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-Currently no new features planned
+Create `Development Containers` version that uses [`Development Containers CLI`](https://github.com/devcontainers/cli).
+To provide a more streamlined experience.
 
 See the [open issues](https://github.com/d-sch/wslg-dev-container/issues) for a full list of proposed features (and known issues).
 

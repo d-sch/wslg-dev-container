@@ -1,0 +1,7 @@
+services:
+  dev:
+    environment:
+      - XDG_DATA_DIRS=$XDG_DATA_DIRS
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - ${PWD}/ide/:/opt/cursor

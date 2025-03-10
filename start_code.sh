@@ -5,7 +5,7 @@
 if [ "$(docker ps -q -f name=dev)" ]; then
     echo "devcontainer is already running"
 else
-    docker compose up -d --build dev
+    docker compose up -d
 fi
 
 docker compose exec -d -u ${USER} dev /opt/code/code

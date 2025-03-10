@@ -14,3 +14,5 @@ install_intellij.sh
 docker-compose*
 Dockerfile
 idea*.tar.gz
+code*.tar.gz
+Cursor-*
