@@ -1,5 +1,7 @@
+.vscode/
 devcontainer/
 ide/
+local/
 docker-compose.override.yml
 **/users.list
 start.sh

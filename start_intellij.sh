@@ -8,4 +8,6 @@ else
     docker compose up -d
 fi
 
+sleep 5
+
 docker compose exec -d -u ${USER} dev /opt/idea/bin/idea

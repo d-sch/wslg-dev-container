@@ -8,4 +8,6 @@ else
     docker compose up -d
 fi
 
+sleep 5
+
 docker compose exec -d -u ${USER} dev /bin/bash -c "sleep 5 && /opt/cursor/AppRun"

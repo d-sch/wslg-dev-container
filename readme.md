@@ -117,6 +117,7 @@ To get a local copy up and running follow these simple example steps.
 
     Just install from the Microsoft Store
     ![a](images/install_ubuntu.png)
+
 - Docker\
     Example on how to install Docker inside WSL2 Ubuntu:
 
@@ -131,25 +132,38 @@ To get a local copy up and running follow these simple example steps.
     $ sudo apt-get update
     $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     ```
-
+- Enable the Virtual Graphics Execution Manager
+  1. Add this configuration file
+      Command
+        ```sh
+        sudo nano /etc/modules-load.d/vgem.conf
+        ```
+      Content
+        ```
+        vgem
+        ```
+  2. Close all open WSL sessions
+  3. Restart WSL
+  - Press Windows+R and run `wsl --shutdown`
+  
 ### Installation
 
 1. Clone the repo
-  ```sh
-  git clone https://github.com/d-sch/wslg-dev-container.git
-  ```
+    ```sh
+    git clone https://github.com/d-sch/wslg-dev-container.git
+    ```
 2. Install your IDE
-  ```sh
-  ./install-code.sh
-  ```
-  or
-  ```sh
-  ./install-cursor.sh
-  ```
-  or
-  ```sh
-  ./install-intellij.sh
-  ```
+    ```sh
+    ./install-code.sh
+    ```
+    or
+    ```sh
+    ./install-cursor.sh
+    ```
+    or
+    ```sh
+    ./install-intellij.sh
+    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -168,60 +182,60 @@ Your IDE will welcome you after the container initialization is done.
 #### Prerequisites
 - Make sure path of `XDG_RUNTIME_DIR`, `XDG_RUNTIME_DIR/dconf` and file `XDG_RUNTIME_DIR/dconf/user` is owned by your user. 
   - Create file according to https://github.com/microsoft/wslg/issues/1032#issuecomment-2458021984
-    ```
-    $ nano ~/.config/user-tmpfiles.d/wslg.conf
-    ```
-    Content
-    ```
-    #Type Path                                     Mode User Group Age         Argument
-    L+    %t/wayland-0                             -    -    -     -           /mnt/wslg/runtime-dir/wayland-0
-    L+    %t/wayland-0.lock                        -    -    -     -           /mnt/wslg/runtime-dir/wayland-0.lock
-    L+    %t/pulse                                 -    -    -     -           /mnt/wslg/runtime-dir/pulse
-    ```
+      ```
+      $ nano ~/.config/user-tmpfiles.d/wslg.conf
+      ```
+      Content
+      ```
+      #Type Path                                     Mode User Group Age         Argument
+      L+    %t/wayland-0                             -    -    -     -           /mnt/wslg/runtime-dir/wayland-0
+      L+    %t/wayland-0.lock                        -    -    -     -           /mnt/wslg/runtime-dir/wayland-0.lock
+      L+    %t/pulse                                 -    -    -     -           /mnt/wslg/runtime-dir/pulse
+      ```
   - ensure `systemd-tmpfiles-setup.service` is enabled
-    ```sh
-    sudo systemctl --global enable systemd-tmpfiles-setup.service
-    ```
+      ```sh
+      sudo systemctl --global enable systemd-tmpfiles-setup.service
+      ```
   - restart WSL in PowerShell or Command Prompt
-    ```
-    wsl --shutdown
-    ```
+      ```
+      wsl --shutdown
+      ```
 
 #### NVidia 
 
 - Make sure devcontainer is down
 - First install the `cuda-toolkit`
-```sh
-$ wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin 
-$ sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
-$ wget https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
-$ sudo dpkg -i cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
-$ sudo cp /var/cuda-repo-wsl-ubuntu-12-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
-$ sudo apt-get update
-$ sudo apt-get -y install cuda-toolkit-12-8
-```
+  ```sh
+  $ wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin 
+  $ sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+  $ wget https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
+  $ sudo dpkg -i cuda-repo-wsl-ubuntu-12-8-local_12.8.1-1_amd64.deb
+  $ sudo cp /var/cuda-repo-wsl-ubuntu-12-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
+  $ sudo apt-get update
+  $ sudo apt-get -y install cuda-toolkit-12-8
+  ```
 - Now install the `nvidia-container-toolkit`
-```sh
-$ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | 
-sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-$ sudo sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list
-$ sudo apt-get update
-```
+  ```sh
+  $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | 
+  sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+    && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+      sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+      sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+  $ sudo sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list
+  $ sudo apt-get update
+  ```
 - Un-commment gpu resources and save `docker-composer.yml`
-```
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-```
+  ```
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - capabilities: [gpu]
+  ```
 - Start devcontainer
-```sh
-$ ./start.sh
-```
+  ```sh
+  $ ./start.sh
+  ```
 
 ##### Current Installation Instructions
 - `cuda-toolkit`\
