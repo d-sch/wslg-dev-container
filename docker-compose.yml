@@ -29,11 +29,11 @@ services:
       - /usr/lib/wsl:/usr/lib/wsl
       - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}
       - /var/run/docker.sock:/var/run/docker.sock
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - capabilities: [gpu]
     security_opt:
       - seccomp:seccomp.json
 
