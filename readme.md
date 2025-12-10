@@ -200,7 +200,8 @@ Your IDE will welcome you after the container initialization is done.
 
 - Make sure devcontainer is down
 - First install the `cuda-toolkit`
-  Latest install instructions here: https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
+  #### Latest install instructions
+  - https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
 
   ```sh
   $ wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin 
@@ -212,6 +213,9 @@ Your IDE will welcome you after the container initialization is done.
   $ sudo apt-get -y install cuda-toolkit-13-1
   ```
 - Now install the `nvidia-container-toolkit`
+  #### Latest install instructions
+  - `nvidia-container-toolkit`\
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-the-nvidia-container-toolkit
   ```sh
   $ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | 
   sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
@@ -233,12 +237,6 @@ Your IDE will welcome you after the container initialization is done.
   ```sh
   $ ./start.sh
   ```
-
-##### Current Installation Instructions
-- `cuda-toolkit`\
-https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
-- `nvidia-container-toolkit`\
-https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-the-nvidia-container-toolkit
 
 ## Visual Studio Code
 ![a](images/vscode_wsl2_container.png)
