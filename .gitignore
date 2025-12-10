@@ -4,7 +4,6 @@ ide/
 local/
 docker-compose.override.yml
 **/users.list
-start.sh
 idea*.tar.gz
 code*.tar.gz
 Cursor-*

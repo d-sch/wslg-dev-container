@@ -131,8 +131,9 @@ To get a local copy up and running follow these simple example steps.
         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     $ sudo apt-get update
     $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    $ sudo adduser "$USER" docker
     ```
-- Enable the Virtual Graphics Execution Manager
+- Enable the Virtual Graphics Execution Manager\
   1. Add this configuration file
       Command
         ```sh
@@ -144,9 +145,11 @@ To get a local copy up and running follow these simple example steps.
         ```
   2. Close all open WSL sessions
   3. Restart WSL
-  - Press Windows+R and run `wsl --shutdown`
-  
+- Press Windows+R and run `wsl --shutdown`
+
 ### Installation
+
+Open `Ubuntu` and execute following commands:
 
 1. Clone the repo
     ```sh
