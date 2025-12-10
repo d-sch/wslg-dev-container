@@ -1,5 +1,13 @@
 services:
   dev:
+    container_name: dev-vscode
     volumes:
-
-      - ${PWD}/ide:/opt/code
+      - ${PWD}/ide/code/:/opt/code
+      - ${PWD}/devcontainer/home/:/home
+    shm_size: 4gb      
+    # Optional resource limits (uncomment to enable)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2.0'
+    #       memory: 4G

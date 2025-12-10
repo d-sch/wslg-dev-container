@@ -1,5 +1,13 @@
 services:
   dev:
+    container_name: dev-intellij
     volumes:
-
-      - ${PWD}/ide/:/opt/idea
+      - ${PWD}/ide/idea:/opt/idea
+      - ${PWD}/devcontainer/home/:/home
+    shm_size: 4gb
+    # Optional resource limits (uncomment to enable)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2.0'
+    #       memory: 6G

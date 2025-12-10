@@ -1,4 +1,4 @@
-FROM ubuntu:24.10 as runtime
+FROM ubuntu:25.04 as runtime
 
 ARG S6_OVERLAY_VERSION=3.1.4.1
 ARG DEBIAN_FRONTEND=noninteractive
