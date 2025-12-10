@@ -3,5 +3,5 @@ set -euo pipefail
 
 for ide in cursor vscode intellij; do
   echo "Attempting to stop $ide"
-  ./stop-ide.sh "$ide" || true
+  ./stop.sh "$ide" || true
 done
