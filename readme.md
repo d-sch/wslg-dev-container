@@ -154,15 +154,7 @@ To get a local copy up and running follow these simple example steps.
     ```
 2. Install your IDE
     ```sh
-    ./install-code.sh
-    ```
-    or
-    ```sh
-    ./install-cursor.sh
-    ```
-    or
-    ```sh
-    ./install-intellij.sh
+    ./install.sh [cursor|code|intellij]
     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -172,7 +164,7 @@ To get a local copy up and running follow these simple example steps.
 
 After your favorite IDE is installed you can start it with
 ```sh
-./start.sh
+./start.sh [cursor|code|intellij]
 ```
 
 Your IDE will welcome you after the container initialization is done.
@@ -259,8 +251,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-Create `Development Containers` version that uses [`Development Containers CLI`](https://github.com/devcontainers/cli).
-To provide a more streamlined experience.
+Create `devcontainers` version that uses [`devcontainers CLI`](https://github.com/devcontainers/cli).
+to provide a more streamlined experience.
 
 See the [open issues](https://github.com/d-sch/wslg-dev-container/issues) for a full list of proposed features (and known issues).
 

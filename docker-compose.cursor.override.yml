@@ -1,7 +1,14 @@
 services:
   dev:
-    environment:
-      - XDG_DATA_DIRS=$XDG_DATA_DIRS
+    container_name: dev-cursor
     volumes:
+      - ${PWD}/devcontainer/home/:/home
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
-      - ${PWD}/ide/:/opt/cursor
+      - ${PWD}/ide/cursor:/opt/cursor
+    shm_size: 4gb 
+    # Optional resource limits (uncomment to enable)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2.0'
+    #       memory: 4G

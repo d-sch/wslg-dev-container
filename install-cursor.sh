@@ -2,7 +2,7 @@
 
 echo "Fetching the latest Cursor download URL..."
 # Use curl to get the JSON response and jq to extract the downloadUrl field
-CURSOR_URL=$(curl -I 'https://cursor.com/download/stable/linux-x64' -o /dev/null -sw %header{location})
+CURSOR_URL=$(curl -I 'https://api2.cursor.sh/updates/download/golden/linux-x64/cursor/latest' -o /dev/null -sw %header{location})
 
 # Extract the version from the URL until first - using sed
 # Example CURSOR_URL=https://anysphere-binaries.s3.us-east-1.amazonaws.com/production/client/linux/x64/appimage/Cursor-0.46.11-ae378be9dc2f5f1a6a1a220c6e25f9f03c8d4e19.deb.glibc2.25-x86_64.AppImage
@@ -74,4 +74,4 @@ fi
 
 ./build.sh
 
-cp start_cursor.sh start.sh
+echo "Installation complete. To start Cursor use: ./start.sh cursor"

@@ -1,6 +1,5 @@
 services:
   dev:
-    container_name: dev
     build: 
       context: .
       args:
@@ -22,7 +21,6 @@ services:
       - "/dev/dri/card0:/dev/dri/card0"
       - "/dev/dri/renderD128:/dev/dri/renderD128"
     volumes:
-      - ${PWD}/devcontainer/home/:${PWD}/devcontainer/home
       - /tmp/wslg-dev-container/:/tmp    
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /mnt/wslg:/mnt/wslg 
