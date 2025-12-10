@@ -133,7 +133,7 @@ To get a local copy up and running follow these simple example steps.
     $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     $ sudo adduser "$USER" docker
     ```
-- Enable the Virtual Graphics Execution Manager\
+- Enable the Virtual Graphics Execution Manager
   1. Add this configuration file
       Command
         ```sh
